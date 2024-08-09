@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foodventeny</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <aside id="sidebar">
+        <!-- Default state for non-authenticated users -->
+        <div id="auth-controls">
+          <h2>Welcome</h2>
+          <button class="switch-btn">Sign In</button>
+          <button class="switch-btn">Sign Up</button>
+        </div>
+
+        <!-- Vendor Dashboard Menu -->
+        <div id="vendor-menu" class="hidden">
+          <h2>Vendor Dashboard</h2>
+          <button id="my-applications-btn">My Applications</button>
+          <button id="view-event-applications-btn">
+            View Event Applications
+          </button>
+          <button class="logout-btn">Logout</button>
+        </div>
+
+        <!-- Event Organizer Dashboard Menu -->
+        <div id="organizer-menu" class="hidden">
+          <h2>Organizer Dashboard</h2>
+          <button id="view-applications-btn">View Applications</button>
+          <button id="view-application-types-btn">
+            View Application Types
+          </button>
+          <button class="logout-btn">Logout</button>
+        </div>
+      </aside>
+
+      <main id="content">
+        <!-- Content will be dynamically updated based on the user's authentication state and role -->
+        <div id="welcome-content">
+          <h1>Welcome to the Foodventeny</h1>
+          <p>Please sign in to access the features.</p>
+
+          <div class="shell">
+            <div class="container a-container" id="a-container">
+              <form action="" method="" class="form" id="a-form">
+                <h2 class="form_title title">Create new account</h2>
+
+                <input
+                  type="text"
+                  id="signup-name-input"
+                  class="form_input"
+                  placeholder="Name"
+                />
+                <input
+                  type="text"
+                  id="signup-email-input"
+                  class="form_input"
+                  placeholder="Email"
+                />
+                <input
+                  type="text"
+                  id="signup-password-input"
+                  class="form_input"
+                  placeholder="Password"
+                />
+                <label>
+                  <input type="radio" name="user_type" value="vendor" checked />
+                  Vendor
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="user_type"
+                    value="event_organizer"
+                  />
+                  Event Organizer
+                </label>
+                <button id="signup-btn" class="form_button button submit">
+                  SIGN UP
+                </button>
+              </form>
+            </div>
+
+            <div class="container b-container" id="b-container">
+              <form action="" method="" class="form" id="b-form">
+                <h2 class="form_title title">Login with your email</h2>
+
+                <input
+                  id="signin-email-input"
+                  type="text"
+                  class="form_input"
+                  placeholder="Email"
+                />
+                <input
+                  id="signin-password-input"
+                  type="text"
+                  class="form_input"
+                  placeholder="Password"
+                />
+                <button id="login-btn" class="form_button button submit">
+                  SIGN IN
+                </button>
+              </form>
+            </div>
+
+            <div class="switch" id="switch-cnt">
+              <div class="switch_circle"></div>
+              <div class="switch_circle switch_circle-t"></div>
+              <div class="switch_container" id="switch-c1">
+                <h2 class="switch_title title" style="letter-spacing: 0">
+                  Welcome Back！
+                </h2>
+                <p class="switch_description description">
+                  Already have an account? Sign in instead!
+                </p>
+                <button class="switch_button button switch-btn">SIGN IN</button>
+              </div>
+
+              <div class="switch_container is-hidden" id="switch-c2">
+                <h2 class="switch_title title" style="letter-spacing: 0">
+                  Hello Friend！
+                </h2>
+                <p class="switch_description description">
+                  Create a new account
+                </p>
+                <button class="switch_button button switch-btn">SIGN UP</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Applications Content for Vendors and Organizers -->
+        <div id="application-content" class="hidden">
+          <h2>View Applications</h2>
+
+          <div>
+            <label for="status-filter">Filter by Status:</label>
+
+            <select id="status-filter">
+              <option value="all">All</option>
+              <option value="pending">Pending</option>
+              <option value="approved">Approved</option>
+              <option value="waitlist">Waitlist</option>
+              <option value="rejected">Rejected</option>
+              <option value="withdrawn">Withdrawn</option>
+            </select>
+
+            <!-- Application Type Filter -->
+            <!-- <label for="application-type-filter"
+              >Filter by Application Type:</label
+            >
+            <select id="application-type-filter">
+              <option value="all">All</option>
+            </select> -->
+          </div>
+
+          <div id="applications-list">
+            <!-- List of applications will be dynamically loaded here -->
+          </div>
+
+          <!-- Pagination Buttons -->
+          <div id="pagination-controls">
+            <button id="prev-page-btn" disabled>Previous Page</button>
+            <button id="next-page-btn" disabled>Next Page</button>
+          </div>
+
+          <button id="add-application-btn" class="add-btn hidden">
+            <span class="icon plus"></span>
+          </button>
+        </div>
+
+        <!-- Application Types Content for Vendors and Organizers -->
+        <div id="application-types-content" class="hidden">
+          <h2>Application Types</h2>
+          <div id="application-types-list">
+            <!-- List of application types will be dynamically loaded here -->
+          </div>
+
+          <button id="add-application-type-btn" class="add-btn hidden">
+            <span class="icon plus"></span>
+          </button>
+        </div>
+
+        <!-- Add Application Type Form -->
+        <div id="add-application-type-form" class="form-popup hidden">
+          <form id="application-type-form" enctype="multipart/form-data">
+            <h2>Add Application Type</h2>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required />
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+
+            <label for="deadline">Deadline:</label>
+            <input type="date" id="deadline" name="deadline" required />
+
+            <label for="cover_photo">Cover Photo:</label>
+            <input
+              type="file"
+              id="cover_photo"
+              name="cover_photo"
+              accept="image/*"
+              required
+            />
+
+            <button type="submit" class="submit-btn">Submit</button>
+            <button type="button" id="close-form-btn" class="close-btn">
+              Close
+            </button>
+          </form>
+        </div>
+
+        <!-- Add Application Type Form -->
+        <div id="add-application-form" class="form-popup hidden">
+          <form id="application-form">
+            <h2>Add Application</h2>
+            <input
+              type="hidden"
+              id="application-type-id"
+              name="application_type_id"
+            />
+
+            <!-- Dropdown to select application type -->
+            <div>
+              <label for="application-type-select">Application Type</label>
+              <select
+                id="application-type-select"
+                name="application_type_id"
+              ></select>
+            </div>
+
+            <!-- Title and Description should be read-only for vendors -->
+            <div>
+              <label for="title">Title</label>
+              <input type="text" id="application-title" name="title" readonly />
+            </div>
+            <div>
+              <label for="description">Description</label>
+              <textarea
+                id="application-description"
+                name="description"
+                readonly
+              ></textarea>
+            </div>
+
+            <div>
+              <label for="deadline">Deadline</label>
+              <input
+                type="date"
+                id="application-deadline"
+                name="deadline"
+                readonly
+              />
+            </div>
+
+            <div style="display: flex; flex-direction: column">
+              <label for="cover_photo">Cover Photo</label>
+              <img
+                id="application-cover-photo"
+                name="cover_photo"
+                style="width: 50px; height: 50px"
+              />
+            </div>
+            <button type="submit" class="submit-btn">Submit</button>
+            <button
+              type="button"
+              id="close-application-form-btn"
+              class="close-btn"
+            >
+              Close
+            </button>
+          </form>
+        </div>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
