@@ -145,9 +145,9 @@ class Application implements CursorAble
             $types .= 's';
         }
 
-        if (isset($filters['application_type_id'])) {
+        if (isset($filters['type_id'])) {
             $query .= " AND application_type_id = ?";
-            $params[] = $filters['application_type_id'];
+            $params[] = $filters['type_id'];
             $types .= 'i';
         }
 
@@ -183,7 +183,7 @@ class Application implements CursorAble
             $types .= 's';
         }
 
-        if (isset($filters['application_type_id'])) {
+        if (isset($filters['type_id'])) {
             $query .= " AND application_type_id = ?";
             $params[] = $filters['type_id'];
             $types .= 'i';

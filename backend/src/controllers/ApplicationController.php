@@ -14,7 +14,7 @@ class ApplicationController {
         
         $filters = [
             'status' => $_GET['status'] ?? null,
-            'type_id' => $_GET['type_id'] ?? null,
+            'type_id' => $_GET['application_type_id'] ?? null,
             'user_id' => $_GET['user_id'] ?? null
         ];
 

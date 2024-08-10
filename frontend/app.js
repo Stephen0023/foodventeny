@@ -40,9 +40,9 @@ const applicationTypeSelect = document.getElementById(
 const addApplicationForm = document.getElementById("add-application-form");
 const statusFilter = document.getElementById("status-filter");
 
-// const applicationTypeFilter = document.getElementById(
-//   "application-type-filter"
-// );
+const applicationTypeFilter = document.getElementById(
+  "application-type-filter"
+);
 
 let user = {
   isAuthenticated: false,
@@ -335,7 +335,7 @@ async function loadApplicationTypes() {
 
       applicationTypeSelect.innerHTML = "";
 
-      // applicationTypeFilter.innerHTML = `<option value="all">All</option>`;
+      applicationTypeFilter.innerHTML = `<option value="all">All</option>`;
 
       data.forEach((applicationType) => {
         const card = document.createElement("div");
@@ -360,10 +360,10 @@ async function loadApplicationTypes() {
         option.textContent = applicationType.title;
         applicationTypeSelect.appendChild(option);
 
-        // const option1 = document.createElement("option");
-        // option1.value = applicationType.id;
-        // option1.textContent = applicationType.title;
-        // applicationTypeFilter.appendChild(option1);
+        const option1 = document.createElement("option");
+        option1.value = applicationType.id;
+        option1.textContent = applicationType.title;
+        applicationTypeFilter.appendChild(option1);
       });
 
       // Set the first application type as the default in the form
@@ -409,6 +409,8 @@ async function loadApplications(
     } else if (currentStartingAfter) {
       url += `&starting_after=${currentStartingAfter}`;
     }
+
+    console.log(url);
 
     const response = await fetch(url);
     const data = await response.json();
@@ -653,9 +655,9 @@ document.addEventListener("DOMContentLoaded", function () {
     currentStartingBefore = null;
 
     if (user.user_type === "vendor") {
-      loadVendorApplications(selectedStatus);
+      loadVendorApplications(selectedStatus, applicationTypeFilter.value);
     } else {
-      loadOrganizerApplications(selectedStatus);
+      loadOrganizerApplications(selectedStatus, applicationTypeFilter.value);
     }
   });
   prevPageBtn.addEventListener("click", function () {
@@ -682,15 +684,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const selectedType = data.find((type) => type.id == selectedTypeId);
     setApplicationTypeInForm(selectedType);
   });
-  // applicationTypeFilter.addEventListener("click", function (event) {
-  //   currentStartingAfter = 0;
-  //   currentStartingBefore = null;
-  //   if (user.user_type === "vendor") {
-  //     loadVendorApplications(statusFilter.value,applicationTypeFilter.value);
-  //   } else {
-  //     loadOrganizerApplications(statusFilter.value,applicationTypeFilter.value);
-  //   }
-  // });
+  applicationTypeFilter.addEventListener("change", function (event) {
+    currentStartingAfter = 0;
+    currentStartingBefore = null;
+    if (user.user_type === "vendor") {
+      loadVendorApplications(statusFilter.value, applicationTypeFilter.value);
+    } else {
+      loadOrganizerApplications(
+        statusFilter.value,
+        applicationTypeFilter.value
+      );
+    }
+  });
   loadApplicationTypes();
   checkLoginStatus(); // Check login status on page load
   updateUI();
