@@ -299,9 +299,12 @@ async function handleUpdateStatus(applicationId, status) {
     if (result.success) {
       alert("Application updated successfully!");
       if (user.user_type === "vendor") {
-        loadVendorApplications(statusFilter.value);
+        loadVendorApplications(statusFilter.value, applicationTypeFilter.value);
       } else {
-        loadOrganizerApplications(statusFilter.value);
+        loadOrganizerApplications(
+          statusFilter.value,
+          applicationTypeFilter.value
+        );
       }
     } else {
       alert("Failed to update the application: " + result.message);
@@ -663,9 +666,17 @@ document.addEventListener("DOMContentLoaded", function () {
   prevPageBtn.addEventListener("click", function () {
     if (currentStartingBefore) {
       if (user.user_type === "vendor") {
-        loadVendorApplications(statusFilter.value, true);
+        loadVendorApplications(
+          statusFilter.value,
+          applicationTypeFilter.value,
+          true
+        );
       } else {
-        loadOrganizerApplications(statusFilter.value, true);
+        loadOrganizerApplications(
+          statusFilter.value,
+          applicationTypeFilter.value,
+          true
+        );
       }
     }
   });

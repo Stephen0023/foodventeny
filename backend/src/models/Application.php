@@ -129,12 +129,11 @@ class Application implements CursorAble
         }
 
         return '?starting_after=' . $this->results[count($this->results) - 1]['id'];
-
     }
 
     private function getMinId($filters = [])
     {
-        
+
         $query = "SELECT MIN(id) as min_id FROM applications WHERE 1=1";
         $params = [];
         $types = '';
@@ -157,16 +156,15 @@ class Application implements CursorAble
             $types .= 'i';
         }
 
-        
-        
+
+
         $stmt = $this->conn->prepare($query);
         if (!empty($params)) {
-        $stmt->bind_param($types, ...$params);
-    }
+            $stmt->bind_param($types, ...$params);
+        }
         $stmt->execute();
         $result = $stmt->get_result()->fetch_assoc();
         return $result ? $result['min_id'] : null;
-
     }
 
 
@@ -196,9 +194,9 @@ class Application implements CursorAble
         }
 
         $stmt = $this->conn->prepare($query);
-       if (!empty($params)) {
-        $stmt->bind_param($types, ...$params);
-    }
+        if (!empty($params)) {
+            $stmt->bind_param($types, ...$params);
+        }
         $stmt->execute();
         $result = $stmt->get_result()->fetch_assoc();
 
