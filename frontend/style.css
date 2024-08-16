@@ -16,7 +16,7 @@ body {
     color: #ecf0f1;
     padding: 15px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    height: 100vh;
+    height: 100%;
 }
 
 #sidebar h2 {
@@ -55,7 +55,7 @@ body {
 #application-content,
 #application-types-content {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;

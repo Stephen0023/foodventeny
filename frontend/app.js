@@ -207,9 +207,9 @@ function showApplications() {
   applicationContent.classList.remove("hidden");
   applicationTypesContent.classList.add("hidden");
   if (user.user_type === "vendor") {
-    loadVendorApplications(statusFilter.value);
+    loadVendorApplications();
   } else {
-    loadOrganizerApplications(statusFilter.value);
+    loadOrganizerApplications();
   }
 }
 
@@ -506,7 +506,7 @@ async function loadApplications(
         withdrawButton.textContent = "Withdraw";
         withdrawButton.classList.add("withdraw-btn");
         withdrawButton.addEventListener("click", () =>
-          handleUpdateStatus(application.id, "withdraw")
+          handleUpdateStatus(application.id, "Withdrawn")
         );
         actionsCell.appendChild(withdrawButton);
       } else if (application.status === "withdrawn") {
@@ -683,9 +683,12 @@ document.addEventListener("DOMContentLoaded", function () {
   nextPageBtn.addEventListener("click", function () {
     if (currentStartingAfter) {
       if (user.user_type === "vendor") {
-        loadVendorApplications(statusFilter.value);
+        loadVendorApplications(statusFilter.value, applicationTypeFilter.value);
       } else {
-        loadOrganizerApplications(statusFilter.value);
+        loadOrganizerApplications(
+          statusFilter.value,
+          applicationTypeFilter.value
+        );
       }
     }
   });
